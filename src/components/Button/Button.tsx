@@ -5,7 +5,7 @@ const Button = ({
   onClick,
 }: {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }) => {
   return (
     <div>

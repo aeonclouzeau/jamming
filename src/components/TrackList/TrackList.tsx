@@ -1,7 +1,12 @@
-import React from "react";
+// import React from "react";
+import Track from "../Track/Track";
 
 const TrackList = () => {
-  return <div></div>;
+  return (
+    <div id="TrackList" className="flex flex-col w-full">
+      <Track />
+    </div>
+  );
 };
 
 export default TrackList;
