@@ -20,7 +20,7 @@ const SearchBar = () => {
         name="search"
         value={search}
         onChange={handleChange}
-        placeholder="Search"
+        placeholder="Search by song, artist, album..."
       />
     </div>
   );
