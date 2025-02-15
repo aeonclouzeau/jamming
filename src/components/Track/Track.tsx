@@ -5,7 +5,7 @@ const Track = ({ id, name, artist, album }: ITrack) => {
   return (
     <div
       id={id}
-      className="flex items-center gap-4 hover:bg-neutral-800 w-full rounded-md px-2 py-1 transition-all ease-in-out duration-200"
+      className="flex items-center gap-4 hover:bg-neutral-800 w-full rounded-md px-2 py-1 transition-all ease-in-out duration-200 snap-start"
     >
       <div className="rounded-md bg-neutral-700 w-10 h-10"></div>
       <div className="flex flex-col">
