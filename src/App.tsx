@@ -1,10 +1,35 @@
+import { useCallback, useState } from "react";
 import "./App.css";
 import Playlist from "./components/Playlist/Playlist";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
-import { tracks } from "./mock/tracks";
+// import { tracks } from "./mock/tracks";
+import { ITrack } from "./types/Track";
 
 function App() {
+  const [playlistName, setPlaylistName] = useState("");
+  const [playlistTracks, setPlaylistTracks] = useState<ITrack[]>([]);
+
+  const updatePlaylistName = useCallback((name: string) => {
+    setPlaylistName(name);
+  }, []);
+
+  const addTrack = useCallback(
+    (track: ITrack) => {
+      if (playlistTracks.some((savedTrack) => savedTrack.id === track.id)) {
+        return;
+      }
+      setPlaylistTracks((prevTracks) => [...prevTracks, track]);
+    },
+    [playlistTracks]
+  );
+
+  const removeTrack = useCallback((track: ITrack) => {
+    setPlaylistTracks((prevTracks) => {
+      return prevTracks.filter((currentTrack) => currentTrack.id !== track.id);
+    });
+  }, []);
+
   return (
     <div className="flex flex-col items-center h-full w-full justify-evenly p-5 gap-10">
       <div className="flex w-full h-[100px] items-center justify-center">
@@ -16,8 +41,13 @@ function App() {
         <SearchBar />
       </div>
       <div className="flex gap-10 w-full h-full">
-        <SearchResults />
-        <Playlist tracks={tracks} />
+        <SearchResults onAdd={addTrack} />
+        <Playlist
+          tracks={playlistTracks}
+          playlistName={playlistName}
+          onNameChange={updatePlaylistName}
+          onRemove={removeTrack}
+        />
       </div>
     </div>
   );
