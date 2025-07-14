@@ -31,10 +31,13 @@ const Track = ({ track, isRemoval, onAdd, onRemove }: TrackProps) => {
   return (
     <div
       id={track.id}
-      className="flex items-center justify-between hover:bg-neutral-800 w-full rounded-md px-2 py-1 transition-all ease-in-out duration-200 snap-start"
+      className="flex items-center justify-between hover:bg-neutral-800 focus:bg-neutral-900 w-full rounded-md px-2 py-1 transition-all ease-in-out duration-200 snap-start"
     >
       <div className="flex gap-4">
-        <div className="rounded-md bg-neutral-700 w-10 h-10" />
+        <img
+          src={track.images[0]}
+          className="rounded-md bg-neutral-700 aspect-square h-10"
+        />
         <div className="flex flex-col">
           <h3 className="font-medium text-neutral-100">{track.name}</h3>
           <div className="flex gap-1">

@@ -1,5 +1,7 @@
+import { RawSpotifyTrack } from "../types/Spotify";
+
 const clientId = "f35f548e116b43579f4afb64ecb18afc";
-const redirectUri = "http://localhost:3000/";
+const redirectUri = "http://localhost:5173/";
 let accessToken: string;
 
 export const Spotify = {
@@ -20,5 +22,31 @@ export const Spotify = {
       const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
       window.location.href = authUrl;
     }
+  },
+
+  search(term: string) {
+    const accessToken = this.getAccessToken();
+    return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((resJson) => {
+        if (!resJson) {
+          return [];
+        }
+
+        return resJson.tracks.items.map((track: RawSpotifyTrack) => ({
+          id: track.id,
+          name: track.name,
+          album: track.album.name,
+          artist: track.artists.map((a) => a.name).join(", "),
+          images: track.album.images.map((i) => i.url),
+          uri: track.uri,
+        }));
+      });
   },
 };

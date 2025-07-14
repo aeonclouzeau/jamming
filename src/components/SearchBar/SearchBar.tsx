@@ -1,27 +1,31 @@
 import React, { useState } from "react";
 import { GoSearch } from "react-icons/go";
+import Button from "../Button/Button";
 
-const SearchBar = () => {
-  const [search, setSearch] = useState<string>("");
+const SearchBar = ({ onSearch }: { onSearch: (term: string) => void }) => {
+  const [term, setTerm] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+    setTerm(e.target.value);
+  };
+
+  const search = () => {
+    onSearch(term);
   };
 
   return (
-    <div
-      id="SearchBar"
-      className="flex border border-transparent items-center gap-2 bg-neutral-800 rounded-md px-2 py-1 w-full h-12 hover:border-purple-400 duration-300 ease-in-out"
-    >
-      <GoSearch className="text-neutral-500" />
+    <div id="SearchBar" className="flex items-center justify-center gap-2">
       <input
-        className="border-none focus:outline-none outline-transparent bg-transparent w-full font-semibold"
+        className="border border-neutral-800 items-center gap-2 bg-neutral-900 rounded-md px-2 py-1 h-12 hover:border-purple-400 duration-300 ease-in-out focus:outline-none outline-transparent w-full font-semibold"
         type="text"
         name="search"
-        value={search}
+        value={term}
         onChange={handleChange}
         placeholder="What songs you wanna add?"
       />
+      <Button variant="circle" onClick={search}>
+        <GoSearch />
+      </Button>
     </div>
   );
 };
