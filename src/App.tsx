@@ -3,15 +3,20 @@ import "./App.css";
 import Playlist from "./components/Playlist/Playlist";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
-// import { tracks } from "./mock/tracks";
 import { ITrack } from "./types/Track";
+import { Spotify } from "./util/Spotify";
 
 function App() {
   const [playlistName, setPlaylistName] = useState("");
   const [playlistTracks, setPlaylistTracks] = useState<ITrack[]>([]);
+  const [searchResults, setSearchResults] = useState<ITrack[]>([]);
 
   const updatePlaylistName = useCallback((name: string) => {
     setPlaylistName(name);
+  }, []);
+
+  const search = useCallback((term: string) => {
+    Spotify.search(term).then(setSearchResults);
   }, []);
 
   const addTrack = useCallback(
@@ -38,10 +43,10 @@ function App() {
         </h1>
       </div>
       <div className="w-[500px]">
-        <SearchBar />
+        <SearchBar onSearch={search} />
       </div>
       <div className="flex gap-10 w-full h-full">
-        <SearchResults onAdd={addTrack} />
+        <SearchResults tracks={searchResults} onAdd={addTrack} />
         <Playlist
           tracks={playlistTracks}
           playlistName={playlistName}

@@ -1,27 +1,31 @@
-export interface ITrack {
+interface ITrack {
   id: string;
   name: string;
   artist: string;
   album: string;
+  images: string[];
+  uri: string;
 }
 
-export type TrackProps = {
+type TrackProps = {
   track: ITrack;
   onAdd?: (track: ITrack) => void;
   onRemove?: (track: ITrack) => void;
   isRemoval?: boolean;
 };
 
-export type TrackListProps = {
+type TrackListProps = {
   tracks: ITrack[];
   onAdd?: (track: ITrack) => void;
   isRemoval?: boolean;
   onRemove?: (track: ITrack) => void;
 };
 
-export type PlaylistProps = {
+type PlaylistProps = {
   tracks: ITrack[];
   playlistName: string;
   onNameChange: (e: string) => void;
   onRemove: (track: ITrack) => void;
 };
+
+export { PlaylistProps, TrackListProps, TrackProps, ITrack };
