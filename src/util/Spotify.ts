@@ -49,4 +49,34 @@ export const Spotify = {
         }));
       });
   },
+
+  savePlaylist(name: string, uris: string[]) {
+    if (!name || !uris.length) {
+      return;
+    }
+
+    const accessToken = this.getAccessToken();
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    let userId: string;
+
+    return fetch("https://api.spotify.com/v1/me", { headers }) // Get user's id
+      .then((res) => res.json())
+      .then((resJson) => {
+        userId = resJson.id;
+        // Create Playlist using user's id
+        return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+          headers,
+          method: "POST",
+          body: JSON.stringify({ name: name }), // Pass in the playlist name as a string
+        })
+          .then((res) => res.json())
+          .then((resJson) => {
+            const playlistId = resJson.id; // Extract playlist id
+            return fetch(
+              `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`,
+              { headers, method: "POST", body: JSON.stringify({ uris: uris }) } // Add the track uris to the user's playlist
+            );
+          });
+      });
+  },
 };

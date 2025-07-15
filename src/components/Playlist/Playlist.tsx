@@ -8,6 +8,7 @@ const Playlist = ({
   playlistName,
   onNameChange,
   onRemove,
+  onSave,
 }: PlaylistProps) => {
   const handleNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,7 @@ const Playlist = ({
         className="bg-transparent text-neutral-100 text-lg font-semibold w-full focus:outline-none"
       />
       <TrackList tracks={tracks} isRemoval onRemove={onRemove} />
-      <Button>Save To Spotify</Button>
+      <Button onClick={onSave}>Save To Spotify</Button>
     </div>
   );
 };

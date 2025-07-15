@@ -26,6 +26,7 @@ type PlaylistProps = {
   playlistName: string;
   onNameChange: (e: string) => void;
   onRemove: (track: ITrack) => void;
+  onSave: () => void;
 };
 
 export { PlaylistProps, TrackListProps, TrackProps, ITrack };
