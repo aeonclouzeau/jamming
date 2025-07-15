@@ -35,6 +35,14 @@ function App() {
     });
   }, []);
 
+  const savePlaylist = useCallback(() => {
+    const uris = playlistTracks.map((track) => track.uri);
+    Spotify.savePlaylist(playlistName, uris)?.then(() => {
+      setPlaylistName("");
+      setPlaylistTracks([]);
+    });
+  }, [playlistName, playlistTracks]);
+
   return (
     <div className="flex flex-col items-center h-full w-full justify-evenly p-5 gap-10">
       <div className="flex w-full h-[100px] items-center justify-center">
@@ -52,6 +60,7 @@ function App() {
           playlistName={playlistName}
           onNameChange={updatePlaylistName}
           onRemove={removeTrack}
+          onSave={savePlaylist}
         />
       </div>
     </div>
